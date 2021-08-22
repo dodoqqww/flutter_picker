@@ -232,25 +232,20 @@ class Picker {
                           style: confirmTextStyle!)));
             }
           } else {
-            actions.add(GestureDetector(
-              child: confirm!,
-              onTap: () async {
-                if (onConfirmBefore != null &&
-                    !(await onConfirmBefore!(this, selecteds))) {
-                  return; // Cancel;
-                }
-                Navigator.pop<List<int>>(context, selecteds);
-                onConfirm!(this, selecteds);
-              },
-            ));
+            actions.add(confirm!);
           }
 
           return AlertDialog(
             shape: this.shape,
             key: key ?? Key('picker-dialog'),
             title: title,
-            actions: actions,
-            content: makePicker(),
+            //actions: actions,
+            content: Column(
+              children: [
+                makePicker(),
+                Row(children: actions),
+              ],
+            ),
           );
         });
   }
