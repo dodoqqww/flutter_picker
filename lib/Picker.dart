@@ -87,6 +87,8 @@ class Picker {
 
   final Widget? footer;
 
+  final ShapeBorder? shape;
+
   /// A widget overlaid on the picker to highlight the currently selected entry.
   final Widget selectionOverlay;
 
@@ -116,6 +118,7 @@ class Picker {
       this.title,
       this.cancel,
       this.confirm,
+      this.shape,
       this.cancelText,
       this.confirmText,
       this.backgroundColor = Colors.white,
@@ -215,7 +218,8 @@ class Picker {
               actions.add(TextButton(
                   style: _getButtonStyle(ButtonTheme.of(context)),
                   onPressed: () async {
-                    if (onConfirmBefore != null && !(await onConfirmBefore!(this, selecteds))) {
+                    if (onConfirmBefore != null &&
+                        !(await onConfirmBefore!(this, selecteds))) {
                       return; // Cancel;
                     }
                     Navigator.pop<List<int>>(context, selecteds);
@@ -232,6 +236,7 @@ class Picker {
           }
 
           return AlertDialog(
+            shape: this.shape,
             key: key ?? Key('picker-dialog'),
             title: title,
             actions: actions,
@@ -1132,7 +1137,12 @@ class DateTimePickerAdapter extends PickerAdapter<DateTime> {
   final int? minuteInterval;
 
   /// Year, month, day suffix
-  final String? yearSuffix, monthSuffix, daySuffix, hourSuffix, minuteSuffix, secondSuffix;
+  final String? yearSuffix,
+      monthSuffix,
+      daySuffix,
+      hourSuffix,
+      minuteSuffix,
+      secondSuffix;
 
   /// use two-digit year, 2019, displayed as 19
   final bool twoDigitYear;
@@ -1215,7 +1225,7 @@ class DateTimePickerAdapter extends PickerAdapter<DateTime> {
     if (!_needUpdatePrev) {
       // check am/pm before hour-ap
       var ap = _columnType.indexWhere((element) => element == 6);
-      if (ap >  _columnType.indexWhere((element) => element == 7)) {
+      if (ap > _columnType.indexWhere((element) => element == 7)) {
         _apBeforeHourAp = true;
         _needUpdatePrev = true;
       }
@@ -1432,7 +1442,8 @@ class DateTimePickerAdapter extends PickerAdapter<DateTime> {
         if (minuteInterval == null || minuteInterval! < 2)
           _text = "${intToStr(index)}${_checkStr(minuteSuffix)}";
         else
-          _text = "${intToStr(index * minuteInterval!)}${_checkStr(minuteSuffix)}";
+          _text =
+              "${intToStr(index * minuteInterval!)}${_checkStr(minuteSuffix)}";
         break;
       case 6:
         List? _ampm = strAMPM ?? PickerLocalizations.of(context).ampm;
