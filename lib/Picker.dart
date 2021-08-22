@@ -217,10 +217,10 @@ class Picker {
                 Icons.done,
               ),
               onPressed: () async {
-                if (onConfirmBefore != null &&
-                    !(await onConfirmBefore!(this, selecteds))) {
-                  return; // Cancel;
-                }
+                // if (onConfirmBefore != null &&
+                //     !(await onConfirmBefore!(this, selecteds))) {
+                //   return; // Cancel;
+                // }
                 Navigator.pop<List<int>>(context, selecteds);
                 onConfirm!(this, selecteds);
               },
