@@ -212,23 +212,19 @@ class Picker {
           }
 
           if (confirm == null) {
-            String? _confirmText =
-                confirmText ?? PickerLocalizations.of(context).confirmText;
-            if (_confirmText != null && _confirmText != "") {
-              actions.add(FloatingActionButton(
-                child: Icon(
-                  Icons.done,
-                ),
-                onPressed: () async {
-                  if (onConfirmBefore != null &&
-                      !(await onConfirmBefore!(this, selecteds))) {
-                    return; // Cancel;
-                  }
-                  Navigator.pop<List<int>>(context, selecteds);
-                  onConfirm!(this, selecteds);
-                },
-              ));
-            }
+            actions.add(FloatingActionButton(
+              child: Icon(
+                Icons.done,
+              ),
+              onPressed: () async {
+                if (onConfirmBefore != null &&
+                    !(await onConfirmBefore!(this, selecteds))) {
+                  return; // Cancel;
+                }
+                Navigator.pop<List<int>>(context, selecteds);
+                onConfirm!(this, selecteds);
+              },
+            ));
           } else {
             actions.add(confirm!);
           }
