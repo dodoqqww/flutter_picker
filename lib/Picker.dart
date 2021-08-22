@@ -194,42 +194,47 @@ class Picker {
             String? _cancelText =
                 cancelText ?? PickerLocalizations.of(context).cancelText;
             if (_cancelText != null && _cancelText != "") {
-              actions.add(TextButton(
-                  style: _getButtonStyle(ButtonTheme.of(context)),
+              actions.add(IconButton(
+                  icon: Icon(Icons.arrow_back),
                   onPressed: () {
                     Navigator.pop<List<int>>(context, null);
                     if (onCancel != null) {
                       onCancel!();
                     }
-                  },
-                  child: cancelTextStyle == null
-                      ? Text(_cancelText)
-                      : DefaultTextStyle(
-                          child: Text(_cancelText), style: cancelTextStyle!)));
+                  }));
+              // child: cancelTextStyle == null
+              //     ? Text(_cancelText)
+              //     : DefaultTextStyle(
+              //         child: Text(_cancelText), style: cancelTextStyle!)));
             }
           } else {
             actions.add(cancel!);
           }
 
+          actions.add(Spacer());
+
           if (confirm == null) {
             String? _confirmText =
                 confirmText ?? PickerLocalizations.of(context).confirmText;
             if (_confirmText != null && _confirmText != "") {
-              actions.add(TextButton(
-                  style: _getButtonStyle(ButtonTheme.of(context)),
-                  onPressed: () async {
-                    if (onConfirmBefore != null &&
-                        !(await onConfirmBefore!(this, selecteds))) {
-                      return; // Cancel;
-                    }
-                    Navigator.pop<List<int>>(context, selecteds);
-                    onConfirm!(this, selecteds);
-                  },
-                  child: confirmTextStyle == null
-                      ? Text(_confirmText)
-                      : DefaultTextStyle(
-                          child: Text(_confirmText),
-                          style: confirmTextStyle!)));
+              actions.add(FloatingActionButton(
+                child: Icon(
+                  Icons.done,
+                ),
+                onPressed: () async {
+                  if (onConfirmBefore != null &&
+                      !(await onConfirmBefore!(this, selecteds))) {
+                    return; // Cancel;
+                  }
+                  Navigator.pop<List<int>>(context, selecteds);
+                  onConfirm!(this, selecteds);
+                },
+                //child: confirmTextStyle == null
+                //    ? Text(_confirmText)
+                //    : DefaultTextStyle(
+                //        child: Text(_confirmText),
+                //        style: confirmTextStyle!)
+              ));
             }
           } else {
             actions.add(confirm!);
