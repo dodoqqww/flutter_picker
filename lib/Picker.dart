@@ -241,9 +241,12 @@ class Picker {
             title: title,
             //actions: actions,
             content: Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
                 makePicker(),
-                Row(children: actions),
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: actions),
               ],
             ),
           );
